@@ -152,6 +152,7 @@ export class Logger {
     const method = action.logLevel === 'error' ? 'error' : 'log'
 
     let prefix: string = ''
+    let suffix: string = ''
     const formattedMessage = this._formatStack(name, normalizedmessage)
 
     if (message['prefix']) {
@@ -159,10 +160,10 @@ export class Logger {
     }
 
     if (message['suffix']) {
-      prefix = this._colors.dim().yellow(`${message['suffix']} `)
+      suffix = this._colors.dim().yellow(` ${message['suffix']}`)
     }
 
-    console[method](`${prefix}${formattedAction}${formattedMessage}`, ...args)
+    console[method](`${prefix}${formattedAction}${formattedMessage}${suffix}`, ...args)
   }
 
   /**
