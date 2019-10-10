@@ -13,6 +13,8 @@ export type MessageNode = {
   prefix?: string,
   suffix?: string,
   icon?: boolean,
+  color?: boolean,
+  underline?: boolean,
   message: string | Error,
 }
 

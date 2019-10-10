@@ -89,37 +89,121 @@ export class Logger {
 
   private _colors = new Colors()
 
+  constructor (private _baseOptions?: Partial<Exclude<MessageNode, 'message'>>) {
+    this._baseOptions = this._baseOptions || {
+      color: true,
+      icon: true,
+      underline: true,
+    }
+  }
+
+  /**
+   * Returns the base message node
+   */
+  private _normalizeMessage (message: string | MessageNode): MessageNode {
+    /**
+     * Message itself is an error object, so we add icon, color and underline
+     * to props to it
+     */
+    if (message['stack']) {
+      message['icon'] = this._baseOptions!.icon
+      message['color'] = this._baseOptions!.color
+      message['underline'] = this._baseOptions!.underline
+      return message as MessageNode
+    }
+
+    /**
+     * Message is a string, so we use the defaults + the message text
+     */
+    if (typeof (message) === 'string') {
+      return Object.assign({}, this._baseOptions, { message })
+    }
+
+    /**
+     * Message is an object, but it's message is an error object. In that
+     * case, we merge the props of message with the defaults and then
+     * copy them over the message.message error object. CONFUSED?
+     */
+    if (message.message['stack']) {
+      const options = Object.assign({}, this._baseOptions, message)
+      message.message['icon'] = options.icon
+      message.message['color'] = options.color
+      message.message['underline'] = options.underline
+      return message.message as MessageNode
+    }
+
+    return Object.assign({}, this._baseOptions, message)
+  }
+
   /**
    * Length of the biggest label to keep all log messages
    * justified
    */
-  private _biggestLabel = Math.max(...Object.keys(this.actions).map((action) => {
-    return stringWidth(this._formatAction(action as keyof ActionsList, false))
+  private _biggestLabel = Math.max(...Object.keys(this.actions).map((name: keyof ActionsList) => {
+    const action = this.actions[name]
+    const colorFn = this._colors[action.color].bind(this._colors)
+    return stringWidth(`${colorFn(action.badge)}  ${colorFn(name)}`)
   }))
 
   /**
-   * Formats an action with colors, icons and whitespace to keep it
-   * justifieds
+   * Returns the icon for a given action type
    */
-  private _formatAction (
-    name: keyof ActionsList,
-    addWhitespace: boolean,
-    icon: boolean = true,
-  ) {
+  private _getIcon (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
     const action = this.actions[name]
-    const badge = this._colors[action.color](action.badge) as string
-    const label = this._colors.underline()[action.color](name) as string
-
-    const message = icon
-      ? `${badge}  ${label}`
-      : `${new Array(stringWidth(badge) + 1).join(' ')}  ${label}`
-
-    if (!addWhitespace) {
-      return message
+    if (!messageNode.icon) {
+      return ' '
     }
 
-    const whitespace = new Array((this._biggestLabel - stringWidth(message)) + 2).join(' ')
-    return `${message}${whitespace}`
+    if (!messageNode.color) {
+      return action.badge
+    }
+
+    return this._colors[action.color](action.badge) as string
+  }
+
+    /**
+   * Returns the label for a given action type
+   */
+  private _getLabel (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
+    const action = this.actions[name]
+
+    if (messageNode.color && messageNode.underline) {
+      return this._colors.underline()[action.color](name) as string
+    }
+
+    if (messageNode.color) {
+      return this._colors[action.color](name) as string
+    }
+
+    return name
+  }
+
+  /**
+   * Returns the prefix for the message
+   */
+  private _getPrefix (messageNode: Partial<MessageNode>): string {
+    if (messageNode.prefix) {
+      return this._colors.dim(`${messageNode.prefix} `)
+    }
+    return ''
+  }
+
+  /**
+   * Returns the suffix for the message
+   */
+  private _getSuffix (messageNode: Partial<MessageNode>): string {
+    if (messageNode.suffix) {
+      return this._colors.dim().yellow(`${messageNode.suffix} `)
+    }
+    return ''
+  }
+
+  /**
+   * Return the whitespace to the value to justify the text
+   */
+  private _getWhitespace (value: string) {
+    const whitespace = new Array((this._biggestLabel - stringWidth(value)) + 2).join(' ')
+    return `${whitespace}`
   }
 
   /**
@@ -139,31 +223,17 @@ export class Logger {
   /**
    * Log message for a given action
    */
-  public log (name: keyof ActionsList, message: string | Error | MessageNode, ...args: string[]) {
-    /**
-     * Normalizing message node
-     */
-    const normalizedmessage = typeof (message) === 'string'
-      ? { message, icon: true }
-      : message
+  public log (name: keyof ActionsList, messageNode: string | Error | MessageNode, ...args: string[]) {
+    const normalizedmessage = this._normalizeMessage(messageNode)
+    const prefix = this._getPrefix(normalizedmessage)
+    const icon = this._getIcon(name, normalizedmessage)
+    const label = this._getLabel(name, normalizedmessage)
+    const whiteSpace = this._getWhitespace(`${icon}  ${label}`)
+    const message = this._formatStack(name, normalizedmessage)
+    const suffix = this._getSuffix(normalizedmessage)
 
-    const action = this.actions[name]
-    const formattedAction = this._formatAction(name, true, normalizedmessage['icon'])
-    const method = action.logLevel === 'error' ? 'error' : 'log'
-
-    let prefix: string = ''
-    let suffix: string = ''
-    const formattedMessage = this._formatStack(name, normalizedmessage)
-
-    if (message['prefix']) {
-      prefix = this._colors.dim(`${message['prefix']} `)
-    }
-
-    if (message['suffix']) {
-      suffix = this._colors.dim().yellow(` ${message['suffix']}`)
-    }
-
-    console[method](`${prefix}${formattedAction}${formattedMessage}${suffix}`, ...args)
+    const method = this.actions[name].logLevel === 'error' ? 'error' : 'log'
+    console[method](`${prefix}${icon}  ${label}${whiteSpace}${message}${suffix}`, ...args)
   }
 
   /**
