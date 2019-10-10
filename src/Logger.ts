@@ -85,6 +85,11 @@ export class Logger {
       badge: figures.pointer,
       logLevel: 'info',
     },
+    skip: {
+      color: 'magenta',
+      badge: figures.bullet,
+      logLevel: 'info',
+    },
   }
 
   private _colors = new Colors()
@@ -325,5 +330,12 @@ export class Logger {
    */
   public compile (message: string | MessageNode, ...args: string[]) {
     return this.log('compile', message, ...args)
+  }
+
+  /**
+   * Print skip message
+   */
+  public skip (message: string | MessageNode, ...args: string[]) {
+    return this.log('skip', message, ...args)
   }
 }

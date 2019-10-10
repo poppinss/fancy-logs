@@ -14,6 +14,7 @@ fancyLogger.success({ message: 'Operation successful', icon: false })
 fancyLogger.compile({ message: 'Operation successful' })
 fancyLogger.info({ message: 'installing dependencies', suffix: '(npm)' })
 fancyLogger.info({ message: 'installing dependencies', color: false, icon: false })
+fancyLogger.skip({ message: 'creating new file' })
 
 fancyLogger.fatal({ message: new Error('Unable to acquire lock'), icon: false })
 
@@ -36,3 +37,4 @@ customLogger.info({ message: 'installing dependencies', suffix: '(npm)' })
 customLogger.info({ message: 'installing dependencies', color: true, icon: true })
 
 customLogger.fatal({ message: new Error('Unable to acquire lock'), icon: true })
+customLogger.skip({ message: 'creating new file' })
