@@ -80,6 +80,11 @@ export class Logger {
       badge: figures.squareSmallFilled,
       logLevel: 'info',
     },
+    compile: {
+      color: 'yellow',
+      badge: figures.pointer,
+      logLevel: 'info',
+    },
   }
 
   private _colors = new Colors()
@@ -242,5 +247,12 @@ export class Logger {
    */
   public stop (message: string | MessageNode, ...args: string[]) {
     return this.log('stop', message, ...args)
+  }
+
+  /**
+   * Print compile message
+   */
+  public compile (message: string | MessageNode, ...args: string[]) {
+    return this.log('compile', message, ...args)
   }
 }

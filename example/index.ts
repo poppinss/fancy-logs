@@ -11,3 +11,4 @@ fancyLogger.complete({
 })
 
 fancyLogger.success({ message: 'Operation successful', icon: false })
+fancyLogger.compile({ message: 'Operation successful' })

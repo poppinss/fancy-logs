@@ -28,7 +28,8 @@ export type ActionNames =
   'delete' |
   'watch' |
   'start' |
-  'stop'
+  'stop' |
+  'compile'
 
 export type Action = {
   color: keyof Colors,
