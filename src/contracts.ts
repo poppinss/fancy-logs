@@ -11,6 +11,8 @@ import { Colors } from '@poppinss/colors/build/src/Base'
 
 export type MessageNode = {
   prefix?: string,
+  suffix?: string,
+  icon?: boolean,
   message: string | Error,
 }
 

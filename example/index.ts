@@ -9,3 +9,5 @@ fancyLogger.complete({
   prefix: '[task]',
   message: 'Fix issue #59',
 })
+
+fancyLogger.success({ message: 'Operation successful', icon: false })

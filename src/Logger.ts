@@ -96,12 +96,19 @@ export class Logger {
    * Formats an action with colors, icons and whitespace to keep it
    * justifieds
    */
-  private _formatAction (name: keyof ActionsList, addWhitespace: boolean) {
+  private _formatAction (
+    name: keyof ActionsList,
+    addWhitespace: boolean,
+    icon: boolean = true,
+  ) {
     const action = this.actions[name]
     const badge = this._colors[action.color](action.badge) as string
     const label = this._colors.underline()[action.color](name) as string
 
-    const message = `${badge}  ${label}`
+    const message = icon
+      ? `${badge}  ${label}`
+      : `${new Array(stringWidth(badge) + 1).join(' ')}  ${label}`
+
     if (!addWhitespace) {
       return message
     }
@@ -131,17 +138,23 @@ export class Logger {
     /**
      * Normalizing message node
      */
-    message = typeof (message) === 'string' ? { message } : message
+    const normalizedmessage = typeof (message) === 'string'
+      ? { message, icon: true }
+      : message
 
     const action = this.actions[name]
-    const formattedAction = this._formatAction(name, true)
+    const formattedAction = this._formatAction(name, true, normalizedmessage['icon'])
     const method = action.logLevel === 'error' ? 'error' : 'log'
 
     let prefix: string = ''
-    const formattedMessage = this._formatStack(name, message)
+    const formattedMessage = this._formatStack(name, normalizedmessage)
 
     if (message['prefix']) {
       prefix = this._colors.dim(`${message['prefix']} `)
+    }
+
+    if (message['suffix']) {
+      prefix = this._colors.dim().yellow(`${message['suffix']} `)
     }
 
     console[method](`${prefix}${formattedAction}${formattedMessage}`, ...args)
