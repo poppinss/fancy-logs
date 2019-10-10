@@ -23,7 +23,7 @@ ___
 
 ###  ActionNames
 
-Ƭ **ActionNames**: *"success" | "fatal" | "error" | "info" | "complete" | "pending" | "create" | "update" | "delete" | "watch" | "start" | "stop"*
+Ƭ **ActionNames**: *"success" | "fatal" | "error" | "info" | "complete" | "pending" | "create" | "update" | "delete" | "watch" | "start" | "stop" | "compile"*
 
 ___
 

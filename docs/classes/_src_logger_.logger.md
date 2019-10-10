@@ -12,6 +12,7 @@ Logger exposes the API to print fancy logs to the console.
 
 ### Methods
 
+* [compile](_src_logger_.logger.md#compile)
 * [complete](_src_logger_.logger.md#complete)
 * [create](_src_logger_.logger.md#create)
 * [delete](_src_logger_.logger.md#delete)
@@ -31,6 +32,23 @@ Logger exposes the API to print fancy logs to the console.
 * [actions](_src_logger_.logger.md#actions)
 
 ## Methods
+
+###  compile
+
+▸ **compile**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+
+Print compile message
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
+`...args` | string[] |
+
+**Returns:** *void*
+
+___
 
 ###  complete
 
@@ -259,6 +277,14 @@ Name | Type |
 ### ▪ **actions**: *object*
 
 List of actions that can be logged using the logger
+
+▪ **compile**: *object*
+
+* **badge**: *string* =  figures.pointer
+
+* **color**: *"yellow"* = "yellow"
+
+* **logLevel**: *"info"* = "info"
 
 ▪ **complete**: *object*
 
