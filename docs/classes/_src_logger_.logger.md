@@ -10,6 +10,10 @@ Logger exposes the API to print fancy logs to the console.
 
 ## Index
 
+### Constructors
+
+* [constructor](_src_logger_.logger.md#constructor)
+
 ### Methods
 
 * [compile](_src_logger_.logger.md#compile)
@@ -21,6 +25,7 @@ Logger exposes the API to print fancy logs to the console.
 * [info](_src_logger_.logger.md#info)
 * [log](_src_logger_.logger.md#log)
 * [pending](_src_logger_.logger.md#pending)
+* [skip](_src_logger_.logger.md#skip)
 * [start](_src_logger_.logger.md#start)
 * [stop](_src_logger_.logger.md#stop)
 * [success](_src_logger_.logger.md#success)
@@ -30,6 +35,20 @@ Logger exposes the API to print fancy logs to the console.
 ### Object literals
 
 * [actions](_src_logger_.logger.md#actions)
+
+## Constructors
+
+###  constructor
+
+\+ **new Logger**(`_baseOptions?`: Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"››): *[Logger](_src_logger_.logger.md)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`_baseOptions?` | Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› |
+
+**Returns:** *[Logger](_src_logger_.logger.md)*
 
 ## Methods
 
@@ -154,7 +173,7 @@ ___
 
 ###  log
 
-▸ **log**(`name`: keyof ActionsList, `message`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **log**(`name`: keyof ActionsList, `messageNode`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
 
 Log message for a given action
 
@@ -163,7 +182,7 @@ Log message for a given action
 Name | Type |
 ------ | ------ |
 `name` | keyof ActionsList |
-`message` | string &#124; Error &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
+`messageNode` | string &#124; Error &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
 **Returns:** *void*
@@ -175,6 +194,23 @@ ___
 ▸ **pending**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
 
 Print pending message
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
+`...args` | string[] |
+
+**Returns:** *void*
+
+___
+
+###  skip
+
+▸ **skip**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+
+Print skip message
 
 **Parameters:**
 
@@ -337,6 +373,14 @@ List of actions that can be logged using the logger
 ▪ **pending**: *object*
 
 * **badge**: *string* =  figures.checkboxOff
+
+* **color**: *"magenta"* = "magenta"
+
+* **logLevel**: *"info"* = "info"
+
+▪ **skip**: *object*
+
+* **badge**: *string* =  figures.bullet
 
 * **color**: *"magenta"* = "magenta"
 
