@@ -7,8 +7,8 @@
 * file that was distributed with this source code.
 */
 
-import { format } from 'util'
 import figures from 'figures'
+import { format } from 'util'
 import stringWidth from 'string-width'
 import { Colors, FakeColors } from '@poppinss/colors'
 import { ActionsList, MessageNode } from './contracts'
@@ -106,15 +106,29 @@ export class Logger {
   private _biggestLabel: number
 
   constructor (private _baseOptions?: Partial<Exclude<MessageNode, 'message'>> & { fake?: boolean }) {
+    this._configure()
+    this._computeBiggestLabel()
+  }
+
+  /**
+   * Configures the logger
+   */
+  private _configure () {
     this._baseOptions = Object.assign({
       color: true,
       icon: true,
       underline: true,
       fake: false,
-    }, _baseOptions)
+    }, this._baseOptions)
 
     this._colors = this._baseOptions!.fake ? new FakeColors() : new Colors()
+  }
 
+  /**
+   * Computes the length of the biggest label including it's icon. Required
+   * to justify content
+   */
+  private _computeBiggestLabel () {
     this._biggestLabel = Math.max(...Object.keys(this.actions).map((name: keyof ActionsList) => {
       const action = this.actions[name]
       const badge = this._colors[action.color](action.badge)
@@ -226,13 +240,6 @@ export class Logger {
   }
 
   /**
-   * Return the whitespace to the value to justify the text
-   */
-  private _getJustifyWhitespace (value: string) {
-    return this._getWhitespace((this._biggestLabel - stringWidth(value)) + 2)
-  }
-
-  /**
    * Formats error message
    */
   private _formatStack (name: keyof ActionsList, message: Error | MessageNode) {
@@ -250,19 +257,24 @@ export class Logger {
    * Log message for a given action
    */
   public log (name: keyof ActionsList, messageNode: string | Error | MessageNode, ...args: string[]) {
-    const normalizedmessage = this._normalizeMessage(messageNode)
-    const prefix = this._getPrefix(normalizedmessage)
-    const icon = this._getIcon(name, normalizedmessage)
-    const label = this._getLabel(name, normalizedmessage)
-    const justifyWhitespace = this._getJustifyWhitespace(`${icon}${label}`)
-    const message = this._formatStack(name, normalizedmessage)
-    const suffix = this._getSuffix(normalizedmessage)
+    const normalizedMessage = this._normalizeMessage(messageNode)
+    const prefix = this._getPrefix(normalizedMessage)
+    const icon = this._getIcon(name, normalizedMessage)
+    const label = this._getLabel(name, normalizedMessage)
+    const message = this._formatStack(name, normalizedMessage)
+    const suffix = this._getSuffix(normalizedMessage)
 
     if (this._baseOptions!.fake) {
-      return format(`${prefix}${icon}${label}${justifyWhitespace}${message}${suffix}`, ...args)
+      return format(`${prefix}${icon}${label} ${message}${suffix}`, ...args)
     }
 
     const method = this.actions[name].logLevel === 'error' ? 'error' : 'log'
+
+    /**
+     * Justification whitespace is required justify the text after the
+     * icon and label
+     */
+    const justifyWhitespace = this._getWhitespace((this._biggestLabel - stringWidth(`${icon}${label}`)) + 2)
     console[method](`${prefix}${icon}${label}${justifyWhitespace}${message}${suffix}`, ...args)
   }
 

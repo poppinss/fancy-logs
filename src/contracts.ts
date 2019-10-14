@@ -9,6 +9,9 @@
 
 import { Colors } from '@poppinss/colors/build/src/Base'
 
+/**
+ * Shape of the acceptable message node
+ */
 export type MessageNode = {
   prefix?: string,
   suffix?: string,
@@ -18,6 +21,9 @@ export type MessageNode = {
   message: string | Error,
 }
 
+/**
+ * Loggable actions
+ */
 export type ActionNames =
   'success' |
   'fatal' |
@@ -34,10 +40,16 @@ export type ActionNames =
   'compile' |
   'skip'
 
+/**
+ * Action definition
+ */
 export type Action = {
   color: keyof Colors,
   badge: string,
   logLevel: 'info' | 'error',
 }
 
+/**
+ * Shape of list of actions
+ */
 export type ActionsList = { [action in ActionNames]: Action }
