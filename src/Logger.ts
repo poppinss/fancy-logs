@@ -105,6 +105,12 @@ export class Logger {
    */
   private _biggestLabel: number
 
+  /**
+   * An array of logs collected only when `fake` is set
+   * to true
+   */
+  public logs: string[] = []
+
   constructor (private _baseOptions?: Partial<Exclude<MessageNode, 'message'>> & { fake?: boolean }) {
     this._configure()
     this._computeBiggestLabel()
@@ -265,7 +271,9 @@ export class Logger {
     const suffix = this._getSuffix(normalizedMessage)
 
     if (this._baseOptions!.fake) {
-      return format(`${prefix}${icon}${label} ${message}${suffix}`, ...args)
+      const log = format(`${prefix}${icon}${label} ${message}${suffix}`, ...args)
+      this.logs.push(log)
+      return log
     }
 
     const method = this.actions[name].logLevel === 'error' ? 'error' : 'log'
