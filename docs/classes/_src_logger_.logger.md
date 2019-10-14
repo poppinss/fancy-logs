@@ -40,13 +40,13 @@ Logger exposes the API to print fancy logs to the console.
 
 ###  constructor
 
-\+ **new Logger**(`_baseOptions?`: Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"››): *[Logger](_src_logger_.logger.md)*
+\+ **new Logger**(`_baseOptions?`: Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object): *[Logger](_src_logger_.logger.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`_baseOptions?` | Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› |
+`_baseOptions?` | Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object |
 
 **Returns:** *[Logger](_src_logger_.logger.md)*
 
@@ -54,7 +54,7 @@ Name | Type |
 
 ###  compile
 
-▸ **compile**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **compile**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print compile message
 
@@ -65,13 +65,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  complete
 
-▸ **complete**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **complete**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print complete message
 
@@ -82,13 +82,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  create
 
-▸ **create**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **create**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print create message
 
@@ -99,13 +99,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  delete
 
-▸ **delete**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **delete**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print delete message
 
@@ -116,13 +116,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  error
 
-▸ **error**(`message`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **error**(`message`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print error message
 
@@ -133,13 +133,13 @@ Name | Type |
 `message` | string &#124; Error &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  fatal
 
-▸ **fatal**(`message`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **fatal**(`message`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print fatal message
 
@@ -150,13 +150,13 @@ Name | Type |
 `message` | string &#124; Error &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  info
 
-▸ **info**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **info**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print info message
 
@@ -167,13 +167,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  log
 
-▸ **log**(`name`: keyof ActionsList, `messageNode`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **log**(`name`: keyof ActionsList, `messageNode`: string | Error | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Log message for a given action
 
@@ -185,13 +185,13 @@ Name | Type |
 `messageNode` | string &#124; Error &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  pending
 
-▸ **pending**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **pending**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print pending message
 
@@ -202,13 +202,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  skip
 
-▸ **skip**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **skip**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print skip message
 
@@ -219,13 +219,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  start
 
-▸ **start**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **start**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print start message
 
@@ -236,13 +236,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  stop
 
-▸ **stop**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **stop**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print stop message
 
@@ -253,13 +253,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  success
 
-▸ **success**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **success**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print success message
 
@@ -270,13 +270,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  update
 
-▸ **update**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **update**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print update message
 
@@ -287,13 +287,13 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ___
 
 ###  watch
 
-▸ **watch**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *void*
+▸ **watch**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
 
 Print watch message
 
@@ -304,7 +304,7 @@ Name | Type |
 `message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
 `...args` | string[] |
 
-**Returns:** *void*
+**Returns:** *undefined | string*
 
 ## Object literals
 
