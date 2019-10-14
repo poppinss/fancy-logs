@@ -17,6 +17,8 @@
 
 Ƭ **Action**: *object*
 
+Action definition
+
 #### Type declaration:
 
 ___
@@ -25,11 +27,15 @@ ___
 
 Ƭ **ActionNames**: *"success" | "fatal" | "error" | "info" | "complete" | "pending" | "create" | "update" | "delete" | "watch" | "start" | "stop" | "compile" | "skip"*
 
+Loggable actions
+
 ___
 
 ###  ActionsList
 
 Ƭ **ActionsList**: *object*
+
+Shape of list of actions
 
 #### Type declaration:
 
@@ -38,5 +44,7 @@ ___
 ###  MessageNode
 
 Ƭ **MessageNode**: *object*
+
+Shape of the acceptable message node
 
 #### Type declaration:

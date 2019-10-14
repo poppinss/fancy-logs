@@ -14,6 +14,10 @@ Logger exposes the API to print fancy logs to the console.
 
 * [constructor](_src_logger_.logger.md#constructor)
 
+### Properties
+
+* [logs](_src_logger_.logger.md#logs)
+
 ### Methods
 
 * [compile](_src_logger_.logger.md#compile)
@@ -49,6 +53,15 @@ Name | Type |
 `_baseOptions?` | Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object |
 
 **Returns:** *[Logger](_src_logger_.logger.md)*
+
+## Properties
+
+###  logs
+
+• **logs**: *string[]* =  []
+
+An array of logs collected only when `fake` is set
+to true
 
 ## Methods
 
