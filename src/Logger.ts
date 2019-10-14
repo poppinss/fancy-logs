@@ -7,9 +7,10 @@
 * file that was distributed with this source code.
 */
 
+import { format } from 'util'
 import figures from 'figures'
 import stringWidth from 'string-width'
-import { Colors } from '@poppinss/colors'
+import { Colors, FakeColors } from '@poppinss/colors'
 import { ActionsList, MessageNode } from './contracts'
 
 /**
@@ -92,14 +93,34 @@ export class Logger {
     },
   }
 
-  private _colors = new Colors()
+  /**
+   * Reference to colors, fake colors are used when `fake` is
+   * set to true
+   */
+  private _colors: Colors | FakeColors
 
-  constructor (private _baseOptions?: Partial<Exclude<MessageNode, 'message'>>) {
-    this._baseOptions = this._baseOptions || {
+  /**
+   * Length of the biggest label to keep all log messages
+   * justified
+   */
+  private _biggestLabel: number
+
+  constructor (private _baseOptions?: Partial<Exclude<MessageNode, 'message'>> & { fake?: boolean }) {
+    this._baseOptions = Object.assign({
       color: true,
       icon: true,
       underline: true,
-    }
+      fake: false,
+    }, _baseOptions)
+
+    this._colors = this._baseOptions!.fake ? new FakeColors() : new Colors()
+
+    this._biggestLabel = Math.max(...Object.keys(this.actions).map((name: keyof ActionsList) => {
+      const action = this.actions[name]
+      const badge = this._colors[action.color](action.badge)
+      const label = this._colors[action.color]().underline(name)
+      return stringWidth(`${badge}  ${label}`)
+    }))
   }
 
   /**
@@ -141,29 +162,30 @@ export class Logger {
   }
 
   /**
-   * Length of the biggest label to keep all log messages
-   * justified
+   * Returns whitespace for a given length
    */
-  private _biggestLabel = Math.max(...Object.keys(this.actions).map((name: keyof ActionsList) => {
-    const action = this.actions[name]
-    const colorFn = this._colors[action.color].bind(this._colors)
-    return stringWidth(`${colorFn(action.badge)}  ${colorFn(name)}`)
-  }))
+  private _getWhitespace (length: number): string {
+    return this._baseOptions!.fake ? ' ' : new Array(length + 1).join(' ')
+  }
 
   /**
    * Returns the icon for a given action type
    */
   private _getIcon (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
     const action = this.actions[name]
+    if (this._baseOptions!.fake) {
+      return ''
+    }
+
     if (!messageNode.icon) {
-      return ' '
+      return this._getWhitespace(3)
     }
 
     if (!messageNode.color) {
-      return action.badge
+      return `${action.badge}${this._getWhitespace(2)}`
     }
 
-    return this._colors[action.color](action.badge) as string
+    return `${this._colors[action.color](action.badge)}${this._getWhitespace(2)}`
   }
 
     /**
@@ -188,7 +210,7 @@ export class Logger {
    */
   private _getPrefix (messageNode: Partial<MessageNode>): string {
     if (messageNode.prefix) {
-      return this._colors.dim(`${messageNode.prefix} `)
+      return `${this._colors.dim(messageNode.prefix)}${this._getWhitespace(1)}`
     }
     return ''
   }
@@ -198,7 +220,7 @@ export class Logger {
    */
   private _getSuffix (messageNode: Partial<MessageNode>): string {
     if (messageNode.suffix) {
-      return this._colors.dim().yellow(`${messageNode.suffix} `)
+      return `${this._getWhitespace(1)}${this._colors.dim().yellow(messageNode.suffix)}`
     }
     return ''
   }
@@ -206,9 +228,8 @@ export class Logger {
   /**
    * Return the whitespace to the value to justify the text
    */
-  private _getWhitespace (value: string) {
-    const whitespace = new Array((this._biggestLabel - stringWidth(value)) + 2).join(' ')
-    return `${whitespace}`
+  private _getJustifyWhitespace (value: string) {
+    return this._getWhitespace((this._biggestLabel - stringWidth(value)) + 2)
   }
 
   /**
@@ -233,12 +254,16 @@ export class Logger {
     const prefix = this._getPrefix(normalizedmessage)
     const icon = this._getIcon(name, normalizedmessage)
     const label = this._getLabel(name, normalizedmessage)
-    const whiteSpace = this._getWhitespace(`${icon}  ${label}`)
+    const justifyWhitespace = this._getJustifyWhitespace(`${icon}${label}`)
     const message = this._formatStack(name, normalizedmessage)
     const suffix = this._getSuffix(normalizedmessage)
 
+    if (this._baseOptions!.fake) {
+      return format(`${prefix}${icon}${label}${justifyWhitespace}${message}${suffix}`, ...args)
+    }
+
     const method = this.actions[name].logLevel === 'error' ? 'error' : 'log'
-    console[method](`${prefix}${icon}  ${label}${whiteSpace}${message}${suffix}`, ...args)
+    console[method](`${prefix}${icon}${label}${justifyWhitespace}${message}${suffix}`, ...args)
   }
 
   /**
