@@ -20,6 +20,8 @@ Logger exposes the API to print fancy logs to the console.
 
 ### Methods
 
+* [$log](_src_logger_.logger.md#protected-$log)
+* [$printMessage](_src_logger_.logger.md#protected-$printmessage)
 * [compile](_src_logger_.logger.md#compile)
 * [complete](_src_logger_.logger.md#complete)
 * [create](_src_logger_.logger.md#create)
@@ -28,7 +30,9 @@ Logger exposes the API to print fancy logs to the console.
 * [fatal](_src_logger_.logger.md#fatal)
 * [info](_src_logger_.logger.md#info)
 * [log](_src_logger_.logger.md#log)
+* [pauseLogger](_src_logger_.logger.md#pauselogger)
 * [pending](_src_logger_.logger.md#pending)
+* [resumeLogger](_src_logger_.logger.md#resumelogger)
 * [skip](_src_logger_.logger.md#skip)
 * [start](_src_logger_.logger.md#start)
 * [stop](_src_logger_.logger.md#stop)
@@ -64,6 +68,41 @@ An array of logs collected only when `fake` is set
 to true
 
 ## Methods
+
+### `Protected` $log
+
+▸ **$log**(`logMethod`: string, `message`: string, `args`: any[]): *void*
+
+Invokes `console[logMethod]`, gives opportunity to overwrite the
+method during extend
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`logMethod` | string |
+`message` | string |
+`args` | any[] |
+
+**Returns:** *void*
+
+___
+
+### `Protected` $printMessage
+
+▸ **$printMessage**(`message`: [DeferredMessageNode](../modules/_src_contracts_.md#deferredmessagenode)): *undefined | string*
+
+Prints message node to the console
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`message` | [DeferredMessageNode](../modules/_src_contracts_.md#deferredmessagenode) |
+
+**Returns:** *undefined | string*
+
+___
 
 ###  compile
 
@@ -202,6 +241,16 @@ Name | Type |
 
 ___
 
+###  pauseLogger
+
+▸ **pauseLogger**(): *void*
+
+Pause the logger and collect logs in memory
+
+**Returns:** *void*
+
+___
+
 ###  pending
 
 ▸ **pending**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
@@ -216,6 +265,23 @@ Name | Type |
 `...args` | string[] |
 
 **Returns:** *undefined | string*
+
+___
+
+###  resumeLogger
+
+▸ **resumeLogger**(`filterFn?`: undefined | function): *void*
+
+Resume logger and pass a function to decide whether or not
+to print the log
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`filterFn?` | undefined &#124; function |
+
+**Returns:** *void*
 
 ___
 

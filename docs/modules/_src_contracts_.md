@@ -9,6 +9,7 @@
 * [Action](_src_contracts_.md#action)
 * [ActionNames](_src_contracts_.md#actionnames)
 * [ActionsList](_src_contracts_.md#actionslist)
+* [DeferredMessageNode](_src_contracts_.md#deferredmessagenode)
 * [MessageNode](_src_contracts_.md#messagenode)
 
 ## Type aliases
@@ -38,6 +39,12 @@ ___
 Shape of list of actions
 
 #### Type declaration:
+
+___
+
+###  DeferredMessageNode
+
+Ƭ **DeferredMessageNode**: *object & [MessageNode](_src_contracts_.md#messagenode)*
 
 ___
 
