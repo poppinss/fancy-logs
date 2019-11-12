@@ -38,3 +38,31 @@ customLogger.info({ message: 'installing dependencies', color: true, icon: true 
 
 customLogger.fatal({ message: new Error('Unable to acquire lock'), icon: true })
 customLogger.skip({ message: 'creating new file' })
+
+console.log('\n======= PAUSING LOGGER TO AVOID DUPLICATES ==========\n')
+
+const duplicates: Set<any> = new Set()
+
+fancyLogger.pauseLogger()
+fancyLogger.success('Operation successful')
+fancyLogger.info('Hello from L59')
+fancyLogger.success('Operation successful')
+fancyLogger.pending('Write release notes for %s', '1.2.0')
+fancyLogger.fatal(new Error('Unable to acquire lock'))
+fancyLogger.watch('Recursively watching build directory...')
+fancyLogger.fatal(new Error('Unable to acquire lock'))
+fancyLogger.info({ message: 'installing dependencies', color: false, icon: false })
+fancyLogger.info({ message: 'installing dependencies', color: false, icon: false })
+
+fancyLogger.resumeLogger((log) => {
+  if (log.action === 'fatal') {
+    return true
+  }
+
+  if (duplicates.has(log.message)) {
+    return false
+  }
+
+  duplicates.add(log.message)
+  return true
+})

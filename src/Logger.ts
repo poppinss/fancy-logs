@@ -10,8 +10,9 @@
 import figures from 'figures'
 import { format } from 'util'
 import stringWidth from 'string-width'
+import { serializeError } from 'serialize-error'
 import { Colors, FakeColors } from '@poppinss/colors'
-import { ActionsList, MessageNode } from './contracts'
+import { ActionsList, MessageNode, DeferredMessageNode } from './contracts'
 
 /**
  * Logger exposes the API to print fancy logs to the console.
@@ -100,6 +101,17 @@ export class Logger {
   private _colors: Colors | FakeColors
 
   /**
+   * Array of logs collected when logger was paused. Helps in
+   * collecting logs and then filtering them during resume.
+   */
+  private _deferredLogs: DeferredMessageNode[] = []
+
+  /**
+   * Is logger paused from printing logs
+   */
+  private _isPaused: boolean = false
+
+  /**
    * Length of the biggest label to keep all log messages
    * justified
    */
@@ -152,10 +164,11 @@ export class Logger {
      * to props to it
      */
     if (message['stack']) {
-      message['icon'] = this._baseOptions!.icon
-      message['color'] = this._baseOptions!.color
-      message['underline'] = this._baseOptions!.underline
-      return message as MessageNode
+      const serializedMessage = serializeError(message)
+      serializedMessage['icon'] = this._baseOptions!.icon
+      serializedMessage['color'] = this._baseOptions!.color
+      serializedMessage['underline'] = this._baseOptions!.underline
+      return serializedMessage as MessageNode
     }
 
     /**
@@ -171,11 +184,12 @@ export class Logger {
      * copy them over the message.message error object. CONFUSED?
      */
     if (message.message['stack']) {
+      const serializedMessage = serializeError(message.message)
       const options = Object.assign({}, this._baseOptions, message)
-      message.message['icon'] = options.icon
-      message.message['color'] = options.color
-      message.message['underline'] = options.underline
-      return message.message as MessageNode
+      serializedMessage['icon'] = options.icon
+      serializedMessage['color'] = options.color
+      serializedMessage['underline'] = options.underline
+      return serializedMessage as MessageNode
     }
 
     return Object.assign({}, this._baseOptions, message)
@@ -260,30 +274,56 @@ export class Logger {
   }
 
   /**
-   * Log message for a given action
+   * Invokes `console[logMethod]`, gives opportunity to overwrite the
+   * method during extend
    */
-  public log (name: keyof ActionsList, messageNode: string | Error | MessageNode, ...args: string[]) {
-    const normalizedMessage = this._normalizeMessage(messageNode)
-    const prefix = this._getPrefix(normalizedMessage)
-    const icon = this._getIcon(name, normalizedMessage)
-    const label = this._getLabel(name, normalizedMessage)
-    const message = this._formatStack(name, normalizedMessage)
-    const suffix = this._getSuffix(normalizedMessage)
+  protected $log (logMethod: string, message: string, args: any[]) {
+    console[logMethod](message, ...args)
+  }
+
+  /**
+   * Prints message node to the console
+   */
+  protected $printMessage (message: DeferredMessageNode) {
+    const prefix = this._getPrefix(message)
+    const icon = this._getIcon(message.action, message)
+    const label = this._getLabel(message.action, message)
+    const formattedMessage = this._formatStack(message.action, message)
+    const suffix = this._getSuffix(message)
 
     if (this._baseOptions!.fake) {
-      const log = format(`${prefix}${icon}${label} ${message}${suffix}`, ...args)
+      const log = format(`${prefix}${icon}${label} ${formattedMessage}${suffix}`, ...message.args)
       this.logs.push(log)
       return log
     }
 
-    const method = this.actions[name].logLevel === 'error' ? 'error' : 'log'
+    const method = this.actions[message.action].logLevel === 'error' ? 'error' : 'log'
 
     /**
      * Justification whitespace is required justify the text after the
      * icon and label
      */
     const justifyWhitespace = this._getWhitespace((this._biggestLabel - stringWidth(`${icon}${label}`)) + 2)
-    console[method](`${prefix}${icon}${label}${justifyWhitespace}${message}${suffix}`, ...args)
+    this.$log(
+      method,
+      `${prefix}${icon}${label}${justifyWhitespace}${formattedMessage}${suffix}`,
+      message.args,
+    )
+  }
+
+  /**
+   * Log message for a given action
+   */
+  public log (name: keyof ActionsList, messageNode: string | Error | MessageNode, ...args: string[]) {
+    const normalizedMessage = this._normalizeMessage(messageNode)
+    const message = Object.assign({ action: name, args }, normalizedMessage)
+
+    if (this._isPaused) {
+      this._deferredLogs.push(message)
+      return
+    }
+
+    return this.$printMessage(message)
   }
 
   /**
@@ -382,5 +422,25 @@ export class Logger {
    */
   public skip (message: string | MessageNode, ...args: string[]) {
     return this.log('skip', message, ...args)
+  }
+
+  /**
+   * Pause the logger and collect logs in memory
+   */
+  public pauseLogger () {
+    this._isPaused = true
+  }
+
+  /**
+   * Resume logger and pass a function to decide whether or not
+   * to print the log
+   */
+  public resumeLogger (filterFn?: (message: DeferredMessageNode) => boolean) {
+    this._isPaused = false
+    this._deferredLogs.forEach((log) => {
+      if (typeof (filterFn) !== 'function' || filterFn(log)) {
+        this.$printMessage(log)
+      }
+    })
   }
 }

@@ -21,6 +21,8 @@ export type MessageNode = {
   message: string | Error,
 }
 
+export type DeferredMessageNode = { action: keyof ActionsList, args: any[] } & MessageNode
+
 /**
  * Loggable actions
  */
