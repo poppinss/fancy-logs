@@ -26,7 +26,7 @@ ___
 
 ###  ActionNames
 
-Ƭ **ActionNames**: *"success" | "fatal" | "error" | "info" | "complete" | "pending" | "create" | "update" | "delete" | "watch" | "start" | "stop" | "compile" | "skip"*
+Ƭ **ActionNames**: *"success" | "fatal" | "error" | "warn" | "info" | "complete" | "pending" | "create" | "update" | "delete" | "watch" | "start" | "stop" | "compile" | "skip"*
 
 Loggable actions
 

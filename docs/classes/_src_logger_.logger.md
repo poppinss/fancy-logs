@@ -38,6 +38,7 @@ Logger exposes the API to print fancy logs to the console.
 * [stop](_src_logger_.logger.md#stop)
 * [success](_src_logger_.logger.md#success)
 * [update](_src_logger_.logger.md#update)
+* [warn](_src_logger_.logger.md#warn)
 * [watch](_src_logger_.logger.md#watch)
 
 ### Object literals
@@ -370,6 +371,23 @@ Name | Type |
 
 ___
 
+###  warn
+
+▸ **warn**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
+
+Print skip message
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`message` | string &#124; [MessageNode](../modules/_src_contracts_.md#messagenode) |
+`...args` | string[] |
+
+**Returns:** *undefined | string*
+
+___
+
 ###  watch
 
 ▸ **watch**(`message`: string | [MessageNode](../modules/_src_contracts_.md#messagenode), ...`args`: string[]): *undefined | string*
@@ -492,6 +510,14 @@ List of actions that can be logged using the logger
 ▪ **update**: *object*
 
 * **badge**: *string* =  figures.tick
+
+* **color**: *"yellow"* = "yellow"
+
+* **logLevel**: *"info"* = "info"
+
+▪ **warn**: *object*
+
+* **badge**: *string* =  figures.warning
 
 * **color**: *"yellow"* = "yellow"
 
