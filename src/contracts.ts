@@ -30,6 +30,7 @@ export type ActionNames =
   'success' |
   'fatal' |
   'error' |
+  'warn' |
   'info' |
   'complete' |
   'pending' |

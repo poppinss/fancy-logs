@@ -5,6 +5,7 @@ fancyLogger.info('Hello from L59')
 fancyLogger.pending('Write release notes for %s', '1.2.0')
 fancyLogger.fatal(new Error('Unable to acquire lock'))
 fancyLogger.watch('Recursively watching build directory...')
+fancyLogger.warn('fire in the hole')
 fancyLogger.complete({
   prefix: '[task]',
   message: 'Fix issue #59',
@@ -15,6 +16,7 @@ fancyLogger.compile({ message: 'Operation successful' })
 fancyLogger.info({ message: 'installing dependencies', suffix: '(npm)' })
 fancyLogger.info({ message: 'installing dependencies', color: false, icon: false })
 fancyLogger.skip({ message: 'creating new file' })
+fancyLogger.warn({ message: 'fire in the hole', icon: false })
 
 fancyLogger.fatal({ message: new Error('Unable to acquire lock'), icon: false })
 

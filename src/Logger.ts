@@ -92,6 +92,11 @@ export class Logger {
       badge: figures.bullet,
       logLevel: 'info',
     },
+    warn: {
+      color: 'yellow',
+      badge: figures.warning,
+      logLevel: 'info',
+    },
   }
 
   /**
@@ -422,6 +427,13 @@ export class Logger {
    */
   public skip (message: string | MessageNode, ...args: string[]) {
     return this.log('skip', message, ...args)
+  }
+
+  /**
+   * Print skip message
+   */
+  public warn (message: string | MessageNode, ...args: string[]) {
+    return this.log('warn', message, ...args)
   }
 
   /**
