@@ -103,24 +103,24 @@ export class Logger {
    * Reference to colors, fake colors are used when `fake` is
    * set to true
    */
-  private _colors: Colors | FakeColors
+  private colors: Colors | FakeColors
 
   /**
    * Array of logs collected when logger was paused. Helps in
    * collecting logs and then filtering them during resume.
    */
-  private _deferredLogs: DeferredMessageNode[] = []
+  private deferredLogs: DeferredMessageNode[] = []
 
   /**
    * Is logger paused from printing logs
    */
-  private _isPaused: boolean = false
+  private isPaused: boolean = false
 
   /**
    * Length of the biggest label to keep all log messages
    * justified
    */
-  private _biggestLabel: number
+  private biggestLabel: number
 
   /**
    * An array of logs collected only when `fake` is set
@@ -128,34 +128,34 @@ export class Logger {
    */
   public logs: string[] = []
 
-  constructor (private _baseOptions?: Partial<Exclude<MessageNode, 'message'>> & { fake?: boolean }) {
-    this._configure()
-    this._computeBiggestLabel()
+  constructor (private baseOptions?: Partial<Exclude<MessageNode, 'message'>> & { fake?: boolean }) {
+    this.configure()
+    this.computeBiggestLabel()
   }
 
   /**
    * Configures the logger
    */
-  private _configure () {
-    this._baseOptions = Object.assign({
+  private configure () {
+    this.baseOptions = Object.assign({
       color: true,
       icon: true,
       underline: true,
       fake: false,
-    }, this._baseOptions)
+    }, this.baseOptions)
 
-    this._colors = this._baseOptions!.fake ? new FakeColors() : new Colors()
+    this.colors = this.baseOptions!.fake ? new FakeColors() : new Colors()
   }
 
   /**
    * Computes the length of the biggest label including it's icon. Required
    * to justify content
    */
-  private _computeBiggestLabel () {
-    this._biggestLabel = Math.max(...Object.keys(this.actions).map((name: keyof ActionsList) => {
+  private computeBiggestLabel () {
+    this.biggestLabel = Math.max(...Object.keys(this.actions).map((name: keyof ActionsList) => {
       const action = this.actions[name]
-      const badge = this._colors[action.color](action.badge)
-      const label = this._colors[action.color]().underline(name)
+      const badge = this.colors[action.color](action.badge)
+      const label = this.colors[action.color]().underline(name)
       return stringWidth(`${badge}  ${label}`)
     }))
   }
@@ -163,16 +163,16 @@ export class Logger {
   /**
    * Returns the base message node
    */
-  private _normalizeMessage (message: string | MessageNode): MessageNode {
+  private normalizeMessage (message: string | MessageNode): MessageNode {
     /**
      * Message itself is an error object, so we add icon, color and underline
      * to props to it
      */
     if (message['stack']) {
       const serializedMessage = serializeError(message)
-      serializedMessage['icon'] = this._baseOptions!.icon
-      serializedMessage['color'] = this._baseOptions!.color
-      serializedMessage['underline'] = this._baseOptions!.underline
+      serializedMessage['icon'] = this.baseOptions!.icon
+      serializedMessage['color'] = this.baseOptions!.color
+      serializedMessage['underline'] = this.baseOptions!.underline
       return serializedMessage as MessageNode
     }
 
@@ -180,7 +180,7 @@ export class Logger {
      * Message is a string, so we use the defaults + the message text
      */
     if (typeof (message) === 'string') {
-      return Object.assign({}, this._baseOptions, { message })
+      return Object.assign({}, this.baseOptions, { message })
     }
 
     /**
@@ -190,55 +190,55 @@ export class Logger {
      */
     if (message.message['stack']) {
       const serializedMessage = serializeError(message.message)
-      const options = Object.assign({}, this._baseOptions, message)
+      const options = Object.assign({}, this.baseOptions, message)
       serializedMessage['icon'] = options.icon
       serializedMessage['color'] = options.color
       serializedMessage['underline'] = options.underline
       return serializedMessage as MessageNode
     }
 
-    return Object.assign({}, this._baseOptions, message)
+    return Object.assign({}, this.baseOptions, message)
   }
 
   /**
    * Returns whitespace for a given length
    */
-  private _getWhitespace (length: number): string {
-    return this._baseOptions!.fake ? ' ' : new Array(length + 1).join(' ')
+  private getWhitespace (length: number): string {
+    return this.baseOptions!.fake ? ' ' : new Array(length + 1).join(' ')
   }
 
   /**
    * Returns the icon for a given action type
    */
-  private _getIcon (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
+  private getIcon (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
     const action = this.actions[name]
-    if (this._baseOptions!.fake) {
+    if (this.baseOptions!.fake) {
       return ''
     }
 
     if (!messageNode.icon) {
-      return this._getWhitespace(3)
+      return this.getWhitespace(3)
     }
 
     if (!messageNode.color) {
-      return `${action.badge}${this._getWhitespace(2)}`
+      return `${action.badge}${this.getWhitespace(2)}`
     }
 
-    return `${this._colors[action.color](action.badge)}${this._getWhitespace(2)}`
+    return `${this.colors[action.color](action.badge)}${this.getWhitespace(2)}`
   }
 
   /**
    * Returns the label for a given action type
    */
-  private _getLabel (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
+  private getLabel (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
     const action = this.actions[name]
 
     if (messageNode.color && messageNode.underline) {
-      return this._colors.underline()[action.color](name) as string
+      return this.colors.underline()[action.color](name) as string
     }
 
     if (messageNode.color) {
-      return this._colors[action.color](name) as string
+      return this.colors[action.color](name) as string
     }
 
     return name
@@ -247,9 +247,9 @@ export class Logger {
   /**
    * Returns the prefix for the message
    */
-  private _getPrefix (messageNode: Partial<MessageNode>): string {
+  private getPrefix (messageNode: Partial<MessageNode>): string {
     if (messageNode.prefix) {
-      return `${this._colors.dim(messageNode.prefix)}${this._getWhitespace(1)}`
+      return `${this.colors.dim(messageNode.prefix)}${this.getWhitespace(1)}`
     }
     return ''
   }
@@ -257,9 +257,9 @@ export class Logger {
   /**
    * Returns the suffix for the message
    */
-  private _getSuffix (messageNode: Partial<MessageNode>): string {
+  private getSuffix (messageNode: Partial<MessageNode>): string {
     if (messageNode.suffix) {
-      return `${this._getWhitespace(1)}${this._colors.dim().yellow(messageNode.suffix)}`
+      return `${this.getWhitespace(1)}${this.colors.dim().yellow(messageNode.suffix)}`
     }
     return ''
   }
@@ -267,14 +267,14 @@ export class Logger {
   /**
    * Formats error message
    */
-  private _formatStack (name: keyof ActionsList, message: Error | MessageNode) {
+  private formatStack (name: keyof ActionsList, message: Error | MessageNode) {
     if (name !== 'fatal' || !message['stack']) {
       return message.message
     }
 
     const stack = message['stack'].split('\n')
     return `${stack.shift()}\n${stack.map((line) => {
-      return `${this._colors.dim(line)}`
+      return `${this.colors.dim(line)}`
     }).join('\n')}`
   }
 
@@ -290,13 +290,13 @@ export class Logger {
    * Prints message node to the console
    */
   protected $printMessage (message: DeferredMessageNode) {
-    const prefix = this._getPrefix(message)
-    const icon = this._getIcon(message.action, message)
-    const label = this._getLabel(message.action, message)
-    const formattedMessage = this._formatStack(message.action, message)
-    const suffix = this._getSuffix(message)
+    const prefix = this.getPrefix(message)
+    const icon = this.getIcon(message.action, message)
+    const label = this.getLabel(message.action, message)
+    const formattedMessage = this.formatStack(message.action, message)
+    const suffix = this.getSuffix(message)
 
-    if (this._baseOptions!.fake) {
+    if (this.baseOptions!.fake) {
       const log = format(`${prefix}${icon}${label} ${formattedMessage}${suffix}`, ...message.args)
       this.logs.push(log)
       return log
@@ -308,7 +308,7 @@ export class Logger {
      * Justification whitespace is required justify the text after the
      * icon and label
      */
-    const justifyWhitespace = this._getWhitespace((this._biggestLabel - stringWidth(`${icon}${label}`)) + 2)
+    const justifyWhitespace = this.getWhitespace((this.biggestLabel - stringWidth(`${icon}${label}`)) + 2)
     this.$log(
       method,
       `${prefix}${icon}${label}${justifyWhitespace}${formattedMessage}${suffix}`,
@@ -320,11 +320,11 @@ export class Logger {
    * Log message for a given action
    */
   public log (name: keyof ActionsList, messageNode: string | Error | MessageNode, ...args: string[]) {
-    const normalizedMessage = this._normalizeMessage(messageNode)
+    const normalizedMessage = this.normalizeMessage(messageNode)
     const message = Object.assign({ action: name, args }, normalizedMessage)
 
-    if (this._isPaused) {
-      this._deferredLogs.push(message)
+    if (this.isPaused) {
+      this.deferredLogs.push(message)
       return
     }
 
@@ -440,7 +440,7 @@ export class Logger {
    * Pause the logger and collect logs in memory
    */
   public pauseLogger () {
-    this._isPaused = true
+    this.isPaused = true
   }
 
   /**
@@ -448,8 +448,8 @@ export class Logger {
    * to print the log
    */
   public resumeLogger (filterFn?: (message: DeferredMessageNode) => boolean) {
-    this._isPaused = false
-    this._deferredLogs.forEach((log) => {
+    this.isPaused = false
+    this.deferredLogs.forEach((log) => {
       if (typeof (filterFn) !== 'function' || filterFn(log)) {
         this.$printMessage(log)
       }
