@@ -1,5 +1,5 @@
 /*
-* @adonisjs/lucid
+* @poppinss/fancy-logs
 *
 * (c) Harminder Virk <virk@adonisjs.com>
 *
