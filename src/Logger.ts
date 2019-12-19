@@ -227,7 +227,7 @@ export class Logger {
     return `${this._colors[action.color](action.badge)}${this._getWhitespace(2)}`
   }
 
-    /**
+  /**
    * Returns the label for a given action type
    */
   private _getLabel (name: keyof ActionsList, messageNode: Partial<MessageNode>): string {
