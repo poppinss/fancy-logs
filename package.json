@@ -23,7 +23,7 @@
   "author": "virk,poppinss",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/mrm-preset": "^2.2.2",
+    "@adonisjs/mrm-preset": "^2.2.3",
     "@types/node": "^12.12.21",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
@@ -68,7 +68,8 @@
   },
   "directories": {
     "doc": "docs",
-    "example": "example"
+    "example": "example",
+    "test": "test"
   },
   "repository": {
     "type": "git",
