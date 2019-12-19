@@ -49,13 +49,13 @@ Logger exposes the API to print fancy logs to the console.
 
 ###  constructor
 
-\+ **new Logger**(`_baseOptions?`: Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object): *[Logger](_src_logger_.logger.md)*
+\+ **new Logger**(`baseOptions?`: Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object): *[Logger](_src_logger_.logger.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`_baseOptions?` | Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object |
+`baseOptions?` | Partial‹Exclude‹[MessageNode](../modules/_src_contracts_.md#messagenode), "message"›› & object |
 
 **Returns:** *[Logger](_src_logger_.logger.md)*
 
