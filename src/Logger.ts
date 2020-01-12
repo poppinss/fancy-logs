@@ -454,5 +454,6 @@ export class Logger {
         this.$printMessage(log)
       }
     })
+    this.deferredLogs = []
   }
 }
