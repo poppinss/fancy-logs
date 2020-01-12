@@ -1,6 +1,6 @@
-[@poppinss/fancy-logs](README.md)
+[@poppinss/fancy-logs - v1.3.3](README.md)
 
-# @poppinss/fancy-logs
+# @poppinss/fancy-logs - v1.3.3
 
 ## Index
 

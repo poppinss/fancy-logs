@@ -1,4 +1,4 @@
-[@poppinss/fancy-logs](../README.md) › ["src/Logger"](../modules/_src_logger_.md) › [Logger](_src_logger_.logger.md)
+[@poppinss/fancy-logs - v1.3.3](../README.md) › ["src/Logger"](../modules/_src_logger_.md) › [Logger](_src_logger_.logger.md)
 
 # Class: Logger
 
@@ -20,8 +20,8 @@ Logger exposes the API to print fancy logs to the console.
 
 ### Methods
 
-* [$log](_src_logger_.logger.md#protected-$log)
-* [$printMessage](_src_logger_.logger.md#protected-$printmessage)
+* [$log](_src_logger_.logger.md#protected-log)
+* [$printMessage](_src_logger_.logger.md#protected-printmessage)
 * [compile](_src_logger_.logger.md#compile)
 * [complete](_src_logger_.logger.md#complete)
 * [create](_src_logger_.logger.md#create)
