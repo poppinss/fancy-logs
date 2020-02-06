@@ -1,4 +1,4 @@
-[@poppinss/fancy-logs - v1.3.3](../README.md) › ["src/Logger"](../modules/_src_logger_.md) › [Logger](_src_logger_.logger.md)
+[@poppinss/fancy-logs](../README.md) › ["src/Logger"](../modules/_src_logger_.md) › [Logger](_src_logger_.logger.md)
 
 # Class: Logger
 
@@ -63,7 +63,7 @@ Name | Type |
 
 ###  logs
 
-• **logs**: *string[]* =  []
+• **logs**: *string[]* = []
 
 An array of logs collected only when `fake` is set
 to true
@@ -413,7 +413,7 @@ List of actions that can be logged using the logger
 
 ▪ **compile**: *object*
 
-* **badge**: *string* =  figures.pointer
+* **badge**: *string* = figures.pointer
 
 * **color**: *"yellow"* = "yellow"
 
@@ -421,7 +421,7 @@ List of actions that can be logged using the logger
 
 ▪ **complete**: *object*
 
-* **badge**: *string* =  figures.checkboxOn
+* **badge**: *string* = figures.checkboxOn
 
 * **color**: *"cyan"* = "cyan"
 
@@ -429,7 +429,7 @@ List of actions that can be logged using the logger
 
 ▪ **create**: *object*
 
-* **badge**: *string* =  figures.tick
+* **badge**: *string* = figures.tick
 
 * **color**: *"green"* = "green"
 
@@ -437,7 +437,7 @@ List of actions that can be logged using the logger
 
 ▪ **delete**: *object*
 
-* **badge**: *string* =  figures.tick
+* **badge**: *string* = figures.tick
 
 * **color**: *"blue"* = "blue"
 
@@ -445,7 +445,7 @@ List of actions that can be logged using the logger
 
 ▪ **error**: *object*
 
-* **badge**: *string* =  figures.cross
+* **badge**: *string* = figures.cross
 
 * **color**: *"red"* = "red"
 
@@ -453,7 +453,7 @@ List of actions that can be logged using the logger
 
 ▪ **fatal**: *object*
 
-* **badge**: *string* =  figures.cross
+* **badge**: *string* = figures.cross
 
 * **color**: *"red"* = "red"
 
@@ -461,7 +461,7 @@ List of actions that can be logged using the logger
 
 ▪ **info**: *object*
 
-* **badge**: *string* =  figures.info
+* **badge**: *string* = figures.info
 
 * **color**: *"blue"* = "blue"
 
@@ -469,7 +469,7 @@ List of actions that can be logged using the logger
 
 ▪ **pending**: *object*
 
-* **badge**: *string* =  figures.checkboxOff
+* **badge**: *string* = figures.checkboxOff
 
 * **color**: *"magenta"* = "magenta"
 
@@ -477,7 +477,7 @@ List of actions that can be logged using the logger
 
 ▪ **skip**: *object*
 
-* **badge**: *string* =  figures.bullet
+* **badge**: *string* = figures.bullet
 
 * **color**: *"magenta"* = "magenta"
 
@@ -485,7 +485,7 @@ List of actions that can be logged using the logger
 
 ▪ **start**: *object*
 
-* **badge**: *string* =  figures.play
+* **badge**: *string* = figures.play
 
 * **color**: *"green"* = "green"
 
@@ -493,7 +493,7 @@ List of actions that can be logged using the logger
 
 ▪ **stop**: *object*
 
-* **badge**: *string* =  figures.squareSmallFilled
+* **badge**: *string* = figures.squareSmallFilled
 
 * **color**: *"magenta"* = "magenta"
 
@@ -501,7 +501,7 @@ List of actions that can be logged using the logger
 
 ▪ **success**: *object*
 
-* **badge**: *string* =  figures.tick
+* **badge**: *string* = figures.tick
 
 * **color**: *"green"* = "green"
 
@@ -509,7 +509,7 @@ List of actions that can be logged using the logger
 
 ▪ **update**: *object*
 
-* **badge**: *string* =  figures.tick
+* **badge**: *string* = figures.tick
 
 * **color**: *"yellow"* = "yellow"
 
@@ -517,7 +517,7 @@ List of actions that can be logged using the logger
 
 ▪ **warn**: *object*
 
-* **badge**: *string* =  figures.warning
+* **badge**: *string* = figures.warning
 
 * **color**: *"yellow"* = "yellow"
 
@@ -525,7 +525,7 @@ List of actions that can be logged using the logger
 
 ▪ **watch**: *object*
 
-* **badge**: *string* =  figures.ellipsis
+* **badge**: *string* = figures.ellipsis
 
 * **color**: *"yellow"* = "yellow"
 

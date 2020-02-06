@@ -1,4 +1,4 @@
-[@poppinss/fancy-logs - v1.3.3](../README.md) › ["src/Logger"](_src_logger_.md)
+[@poppinss/fancy-logs](../README.md) › ["src/Logger"](_src_logger_.md)
 
 # External module: "src/Logger"
 

@@ -1,4 +1,4 @@
-[@poppinss/fancy-logs - v1.3.3](../README.md) › ["src/contracts"](_src_contracts_.md)
+[@poppinss/fancy-logs](../README.md) › ["src/contracts"](_src_contracts_.md)
 
 # External module: "src/contracts"
 
@@ -21,6 +21,12 @@
 Action definition
 
 #### Type declaration:
+
+* **badge**: *string*
+
+* **color**: *keyof Colors*
+
+* **logLevel**: *"info" | "error"*
 
 ___
 
@@ -55,3 +61,15 @@ ___
 Shape of the acceptable message node
 
 #### Type declaration:
+
+* **color**? : *undefined | false | true*
+
+* **icon**? : *undefined | false | true*
+
+* **message**: *string | Error*
+
+* **prefix**? : *undefined | string*
+
+* **suffix**? : *undefined | string*
+
+* **underline**? : *undefined | false | true*

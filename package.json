@@ -1,6 +1,6 @@
 {
   "name": "@poppinss/fancy-logs",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Printing fancy logs to the terminal",
   "main": "build/index.js",
   "files": [
