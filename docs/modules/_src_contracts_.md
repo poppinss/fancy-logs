@@ -1,6 +1,6 @@
 [@poppinss/fancy-logs](../README.md) › ["src/contracts"](_src_contracts_.md)
 
-# External module: "src/contracts"
+# Module: "src/contracts"
 
 ## Index
 

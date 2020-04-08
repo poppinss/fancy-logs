@@ -4,7 +4,7 @@
 
 ## Index
 
-### External modules
+### Modules
 
 * ["example/index"](modules/_example_index_.md)
 * ["src/Logger"](modules/_src_logger_.md)
