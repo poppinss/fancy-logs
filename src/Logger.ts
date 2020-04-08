@@ -10,7 +10,6 @@
 import figures from 'figures'
 import { format } from 'util'
 import stringWidth from 'string-width'
-import { serializeError } from 'serialize-error'
 import { Colors, FakeColors } from '@poppinss/colors'
 import { ActionsList, MessageNode, DeferredMessageNode } from './contracts'
 
@@ -160,6 +159,13 @@ export class Logger {
     }))
   }
 
+  private serializeError<T extends { stack?: any, name?: any, message?: any, code?: any }> (error: T): T {
+    return Object.getOwnPropertyNames(error).reduce((result, key) => {
+      result[key] = error[key]
+      return result
+    }, {} as T)
+  }
+
   /**
    * Returns the base message node
    */
@@ -168,8 +174,8 @@ export class Logger {
      * Message itself is an error object, so we add icon, color and underline
      * to props to it
      */
-    if (message['stack']) {
-      const serializedMessage = serializeError(message)
+    if (typeof (message) !== 'string' && message['stack']) {
+      const serializedMessage = this.serializeError(message)
       serializedMessage['icon'] = this.baseOptions!.icon
       serializedMessage['color'] = this.baseOptions!.color
       serializedMessage['underline'] = this.baseOptions!.underline
@@ -188,8 +194,8 @@ export class Logger {
      * case, we merge the props of message with the defaults and then
      * copy them over the message.message error object. CONFUSED?
      */
-    if (message.message['stack']) {
-      const serializedMessage = serializeError(message.message)
+    if (typeof (message.message) !== 'string' && message.message['stack']) {
+      const serializedMessage = this.serializeError(message.message)
       const options = Object.assign({}, this.baseOptions, message)
       serializedMessage['icon'] = options.icon
       serializedMessage['color'] = options.color
