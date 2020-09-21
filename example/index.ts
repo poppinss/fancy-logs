@@ -7,8 +7,8 @@ fancyLogger.fatal(new Error('Unable to acquire lock'))
 fancyLogger.watch('Recursively watching build directory...')
 fancyLogger.warn('fire in the hole')
 fancyLogger.complete({
-  prefix: '[task]',
-  message: 'Fix issue #59',
+	prefix: '[task]',
+	message: 'Fix issue #59',
 })
 
 fancyLogger.success({ message: 'Operation successful', icon: false })
@@ -29,8 +29,8 @@ customLogger.pending('Write release notes for %s', '1.2.0')
 customLogger.fatal(new Error('Unable to acquire lock'))
 customLogger.watch('Recursively watching build directory...')
 customLogger.complete({
-  prefix: '[task]',
-  message: 'Fix issue #59',
+	prefix: '[task]',
+	message: 'Fix issue #59',
 })
 
 customLogger.success({ message: 'Operation successful', icon: true })
@@ -57,14 +57,14 @@ fancyLogger.info({ message: 'installing dependencies', color: false, icon: false
 fancyLogger.info({ message: 'installing dependencies', color: false, icon: false })
 
 fancyLogger.resumeLogger((log) => {
-  if (log.action === 'fatal') {
-    return true
-  }
+	if (log.action === 'fatal') {
+		return true
+	}
 
-  if (duplicates.has(log.message)) {
-    return false
-  }
+	if (duplicates.has(log.message)) {
+		return false
+	}
 
-  duplicates.add(log.message)
-  return true
+	duplicates.add(log.message)
+	return true
 })

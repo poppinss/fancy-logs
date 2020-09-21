@@ -1,4 +1,5 @@
 # Fancy Logger
+
 > Fancy logger used by AdonisJS CLI apps
 
 [![circleci-image]][circleci-url] [![typescript-image]][typescript-url] [![npm-image]][npm-url] [![license-image]][license-url]
@@ -25,6 +26,7 @@ We didn't used signale coz of following reasons:
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
+
 Install the package from npm registry as follows:
 
 ```sh
@@ -35,6 +37,7 @@ yarn add @poppinss/fancy-logs
 ```
 
 ## Usage
+
 Import and use the logger as follows
 
 ```ts
@@ -60,28 +63,31 @@ import { Logger } from '@poppinss/fancy-logs'
 
 /**
  * Disable underlines and icons
-*/
+ */
 const fancyLogger = new Logger({
   underline: false,
   icon: false,
-  color: true
+  color: true,
 })
 ```
 
 ## Deferred logs
+
 When running CLI tasks from 3rd party plugins, you may end in a situation where multiple plugins will print the same log messages. For example:
 
 **Plugin A updates `tsconfig.json`**
+
 ```
 logger.update('tsconfig.json')
 ```
 
 **Plugin B update `tsconfig.json` with a different option but logs the same message**
+
 ```
 logger.update('tsconfig.json')
 ```
 
-After this the CLI will reflect 2 lines saying `update  tsconfig.json`. You can avoid this behavior by pausing and resuming the logger.
+After this the CLI will reflect 2 lines saying `update tsconfig.json`. You can avoid this behavior by pausing and resuming the logger.
 
 ```ts
 logger.pauseLogger()
@@ -103,6 +109,7 @@ logger.resumeLogger((message) => {
 The callback passed to `resumeLogger` must return `true` when it wants to print a message and `false` for opposite behavior.
 
 ## Testing log messages
+
 You can also safely test the log messages by creating an instance with `fake=true`. For example:
 
 ```ts
@@ -115,18 +122,15 @@ logger.info('Account created')
 
 assert.deepEqual(logger.logs, [
   'underline(yellow(warn)) Fire in the hole',
-  'underline(blue(info)) Account created'
+  'underline(blue(info)) Account created',
 ])
 ```
 
 [circleci-image]: https://img.shields.io/circleci/project/github/poppinss/fancy-logs/master.svg?style=for-the-badge&logo=circleci
-[circleci-url]: https://circleci.com/gh/poppinss/fancy-logs "circleci"
-
+[circleci-url]: https://circleci.com/gh/poppinss/fancy-logs 'circleci'
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
-[typescript-url]:  "typescript"
-
+[typescript-url]: "typescript"
 [npm-image]: https://img.shields.io/npm/v/@poppinss/fancy-logs.svg?style=for-the-badge&logo=npm
-[npm-url]: https://npmjs.org/package/@poppinss/fancy-logs "npm"
-
+[npm-url]: https://npmjs.org/package/@poppinss/fancy-logs 'npm'
 [license-image]: https://img.shields.io/npm/l/@poppinss/fancy-logs?color=blueviolet&style=for-the-badge
-[license-url]: LICENSE.md "license"
+[license-url]: LICENSE.md 'license'
