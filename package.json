@@ -66,7 +66,7 @@
   "dependencies": {
     "@poppinss/colors": "^2.0.3",
     "figures": "^3.2.0",
-    "string-width": "^4.2.0"
+    "string-width": "^4.2.1"
   },
   "directories": {
     "doc": "docs",
