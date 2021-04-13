@@ -64,7 +64,7 @@
     }
   },
   "dependencies": {
-    "@poppinss/colors": "^2.1.0",
+    "@poppinss/colors": "^2.1.1",
     "figures": "^3.2.0",
     "string-width": "^4.2.2"
   },
